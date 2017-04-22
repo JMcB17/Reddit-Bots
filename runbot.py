@@ -27,14 +27,14 @@ def findt(Text, Type):
     return findmatch(Text, Tragedy, 50, Type)
 
 #Test
-ClientID = 'FmFQgtKl41ehaQ'
-ClientSecret = 'l9PvV_Pr10la_YsCWQN6PPXH_C0'
+ClientID = 'nope'
+ClientSecret = 'nope'
 
 import praw
 
 UserAgent = 'python3.6.1:darthplagueisbot:v1 (by /u/Sgp15)'
 Username = 'darthplagueisbot'
-Password = 'CoreHairSee62'
+Password = 'doyoutakemeforafool?iamnotthatstupid'
 
 reddit = praw.Reddit(client_id = ClientID,
                      client_secret = ClientSecret,
