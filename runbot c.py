@@ -46,11 +46,11 @@ def progress():
         Beep(125, 250)
 
 #details
-BotA = {'ClientID': 'FmFQgtKl41ehaQ',
-        'ClientSecret': 'l9PvV_Pr10la_YsCWQN6PPXH_C0',
+BotA = {'ClientID': 'SECRET',
+        'ClientSecret': 'SECRET',
         'UserAgent': 'python3.6.1:darthplagueisbot:v1 (by /u/Sgp15)',
         'Username': 'darthplagueisbot',
-        'Password': 'CoreHairSee62'}
+        'Password': 'SECRET'}
 
 Account = BotA
 
