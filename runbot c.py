@@ -16,7 +16,6 @@ def findmatch(Text, Object, PercForMatch, WhichData):
     for i in range(len(OWords)):
         if OWords[i] in Text:
             MatchPerc += PercPerWord
-    #print(MatchPerc)
 
     if MatchPerc >= PercForMatch:
         Match = True
@@ -29,7 +28,7 @@ def findmatch(Text, Object, PercForMatch, WhichData):
         return MatchPerc
 
 def findt(Text, Type):
-    Tragedy = 'Did you ever hear the tragedy of Darth Plagueis the wise?'
+    Tragedy = 'Did you ever hear the tragedy of Darth Plagueis the wise'
     return findmatch(Text, Tragedy, 73, Type)
 
 #function to log activity to avoid duplicate comments
@@ -41,28 +40,29 @@ def log(ID):
 def progress():
     global Scanned
     Scanned += 1
-    if Scanned % 100 == 0:
+    if Scanned % 10 == 0:
         print(str(Scanned) + ' comments scanned.')
         Beep(125, 250)
 
-#details
-BotA = {'ClientID': 'SECRET',
-        'ClientSecret': 'SECRET',
-        'UserAgent': 'python3.6.1:darthplagueisbot:v1 (by /u/Sgp15)',
-        'Username': 'darthplagueisbot',
-        'Password': 'SECRET'}
+#fetch details from file
+File = open('details.txt', 'r')
+Details = File.read()
 
-Account = BotA
+BotA = {'ClientID': Details[Details.index('!')+1:Details.index('"')],
+        'ClientSecret': Details[Details.index('£')+1:Details.index('$')],
+        'Password': Details[Details.index('%')+1:Details.index('^')],
+        'UserAgent': 'python3.6.1:darthplagueisbot:v1.2 (by /u/Sgp15)',
+        'Username': Details[Details.index('&')+1:Details.index('*')]}
 
 #initialise reddit object with details
-reddit = praw.Reddit(client_id = Account['ClientID'],
-                     client_secret = Account['ClientSecret'],
-                     password = Account['Password'],
-                     user_agent = Account['UserAgent'],
-                     username = Account['Username'])
+reddit = praw.Reddit(client_id = BotA['ClientID'],
+                     client_secret = BotA['ClientSecret'],
+                     password = BotA['Password'],
+                     user_agent = BotA['UserAgent'],
+                     username = BotA['Username'])
 
 #active zone
-subreddit = reddit.subreddit('test')
+subreddit = reddit.subreddit('PrequelMemes')
 
 Tragedy = 'I thought not. It\'s not a story the Jedi would tell you. It\'s a Sith legend. Darth Plagueis was a Dark Lord of the Sith, so powerful and so wise he could use the Force to influence the midichlorians to create life... He had such a knowledge of the dark side that he could even keep the ones he cared about from dying. The dark side of the Force is a pathway to many abilities some consider to be unnatural. He became so powerful... the only thing he was afraid of was losing his power, which eventually, of course, he did. Unfortunately, he taught his apprentice everything he knew, then his apprentice killed him in his sleep. It\'s ironic he could save others from death, but not himself.'
 
@@ -74,7 +74,7 @@ while True:
     for comment in subreddit.stream.comments():
         try:
             progress()
-            if findt(comment.body, 1) and not str(comment) in Record:
+            if findt(comment.body, 1) and not str(comment) in Record and comment.body != Tragedy:
                 Beep(250, 250)
                 print('')
                 print(comment)
@@ -83,6 +83,7 @@ while True:
                 print(findt(comment.body, 0))
                 comment.reply(Tragedy)
                 log(comment)
+                print('')
         except praw.exceptions.APIException as err:
             ErrorDetails = str(err)
             WaitTime = ErrorDetails[54:55]
