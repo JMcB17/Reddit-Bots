@@ -74,7 +74,7 @@ while True:
     for comment in subreddit.stream.comments():
         try:
             progress()
-            if findt(comment.body, 1) and not str(comment) in Record and comment.body != Tragedy:
+            if findt(comment.body, 1) and not str(comment) in Record and not findmatch(comment.body, Tragedy, 73, 1):
                 Beep(250, 250)
                 print('')
                 print(comment)
